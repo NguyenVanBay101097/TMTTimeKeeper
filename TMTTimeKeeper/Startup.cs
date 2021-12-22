@@ -11,6 +11,7 @@ using TMTTimeKeeper.Helpers;
 using TMTTimeKeeper.Interface;
 using Microsoft.OpenApi.Models;
 using System;
+using TMTTimeKeeper.Middlewares;
 
 namespace TMTTimeKeeper
 {
@@ -78,6 +79,7 @@ namespace TMTTimeKeeper
             }
 
             app.UseRouting();
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseEndpoints(endpoints =>
             {

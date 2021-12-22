@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Middlewares
+namespace TMTTimeKeeper.Middlewares
 {
     public class ErrorHandlingMiddleware
     {
