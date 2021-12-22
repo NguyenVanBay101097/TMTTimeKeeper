@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs bg-primary">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/main/timekeeper-list']" routerLinkActive="active"><strong>Máy chấm công</strong></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/main/timekeeper-accounts']" routerLinkActive="active"><strong>Tài khoản chấm công</strong></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/main/timekeeper-data']" routerLinkActive="active"><strong>Dữ liệu chấm công</strong></a>
+    </li>
+</ul>
+<div>
+    <router-outlet></router-outlet>
+</div>

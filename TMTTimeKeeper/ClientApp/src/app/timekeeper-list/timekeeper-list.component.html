@@ -1,0 +1,35 @@
+<div class="row mt-3 mb-3">
+    <div class="p-0 col-md-8">
+        <strong>Danh sách máy chấm công</strong>
+    </div>
+    <div class="p-0 text-right col-md-4">
+        <button class="btn btn-success">Thêm</button>
+    </div>
+</div>
+<div class="row">
+    <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Tên máy</th>
+            <th scope="col">Model máy</th>
+            <th scope="col">Port</th>
+            <th scope="col">Địa chỉ IP</th>
+            <th scope="col">Chi nhánh</th>
+            <th scope="col">Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of timeKeepers">
+            <td>{{item.name}}</td>
+            <td>{{item.model}}</td>
+            <td>{{item.tcpPort}}</td>
+            <td>{{item.ipAddress}}</td>
+            <td>Chi nhánh 1</td>
+            <td>
+                <button *ngIf="!item.isConnect" class="btn btn-primary" (click)="connect(item)">Kết nối</button>
+                <button *ngIf="item.isConnect" class="btn btn-danger">Ngắt kết nối</button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</div>
