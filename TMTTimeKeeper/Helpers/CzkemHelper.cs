@@ -190,16 +190,16 @@ namespace TMTTimeKeeper.Helpers
             };
         }
 
-        public int Connect(string ip, string port)
+        public bool Connect(string ip, string port)
         {
             if (ip == "" || port == "")
             {
-                return -1;// ip or port is null
+                return false;// ip or port is null
             }
 
             if (Convert.ToInt32(port) <= 0 || Convert.ToInt32(port) > 65535)
             {
-                return -1;
+                return false;
             }
 
             int idwErrorCode = 0;
@@ -212,16 +212,17 @@ namespace TMTTimeKeeper.Helpers
             //    return -2; //disconnect
             //}
 
-            if (axCZKEM1.Connect_Net(ip, Convert.ToInt32(port)) == true)
-            {
-                SetConnectState(true);
-                return 1;
-            }
-            else
-            {
-                axCZKEM1.GetLastError(ref idwErrorCode);
-                return idwErrorCode;
-            }
+            //if (axCZKEM1.Connect_Net(ip, Convert.ToInt32(port)) == true)
+            //{
+            //    SetConnectState(true);
+            //    return true;
+            //}
+            //else
+            //{
+            //    axCZKEM1.GetLastError(ref idwErrorCode);
+            //    return false;
+            //}
+            return axCZKEM1.Connect_Net(ip, Convert.ToInt32(port));
         }
 
         public int sta_GetDeviceInfo(out string sFirmver, out string sMac, out string sPlatform, out string sSN, out string sProductTime, out string sDeviceName, out int iFPAlg, out int iFaceAlg, out string sProducter)

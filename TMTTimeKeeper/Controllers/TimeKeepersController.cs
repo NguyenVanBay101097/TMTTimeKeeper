@@ -54,7 +54,7 @@ namespace TMTTimeKeeper.Controllers
         public IActionResult Connect([FromBody] TimeKeeperConnectReq val)
         {
             var res = _czkemHelper.Connect(val.IPAddress,val.TCPPort);
-            return Ok(res);
+            return Ok(new {Result = res});
         }
     }
 }

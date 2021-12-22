@@ -57,17 +57,6 @@ namespace TMTTimeKeeper
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
-            app.UseRouting();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -80,6 +69,15 @@ namespace TMTTimeKeeper
                 // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
                 //c.RoutePrefix = string.Empty;
             });
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles();
+            }
+
+            app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
