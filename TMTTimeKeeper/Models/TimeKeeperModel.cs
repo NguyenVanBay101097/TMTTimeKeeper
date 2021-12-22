@@ -13,4 +13,9 @@ namespace TMTTimeKeeper.Models
         public string IPAddress { get; set; }
         public string TCPPort { get; set; }
     }
+    public class TimeKeeperConnectReq
+    {
+        public string IPAddress { get; set; }
+        public string TCPPort { get; set; }
+    }
 }
