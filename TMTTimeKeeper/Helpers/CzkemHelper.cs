@@ -22,7 +22,7 @@ namespace TMTTimeKeeper.Helpers
         }
         public int GetMachineNumber()
         {
-            return iMachineNumber;
+            return axCZKEM1.MachineNumber;
         }
         public CzkemHelper(int machineid)
         {
@@ -40,7 +40,7 @@ namespace TMTTimeKeeper.Helpers
             bIsConnected = state;
         }
 
-        public ReadLogResult sta_readLogByPeriod(string fromTime, string toTime)
+        public ReadLogResult ReadTimeGLogData(int machineNumber, string fromTime, string toTime)
         {
             if (GetConnectState() == false)
             {
@@ -67,9 +67,9 @@ namespace TMTTimeKeeper.Helpers
             int idwWorkcode = 0;
 
             var logData = new List<ReadLogResultData>();
-            if (axCZKEM1.ReadTimeGLogData(GetMachineNumber(), fromTime, toTime))
+            if (axCZKEM1.ReadTimeGLogData(machineNumber, fromTime, toTime))
             {
-                while (axCZKEM1.SSR_GetGeneralLogData(GetMachineNumber(), out sdwEnrollNumber, out idwVerifyMode,
+                while (axCZKEM1.SSR_GetGeneralLogData(machineNumber, out sdwEnrollNumber, out idwVerifyMode,
                             out idwInOutMode, out idwYear, out idwMonth, out idwDay, out idwHour, out idwMinute, out idwSecond, ref idwWorkcode))//get records from the memory
                 {
                     logData.Add(new ReadLogResultData
@@ -192,11 +192,6 @@ namespace TMTTimeKeeper.Helpers
 
         public bool Connect(string ip, string port)
         {
-            if (ip == "" || port == "")
-            {
-                return false;// ip or port is null
-            }
-
             if (Convert.ToInt32(port) <= 0 || Convert.ToInt32(port) > 65535)
             {
                 return false;
@@ -204,25 +199,32 @@ namespace TMTTimeKeeper.Helpers
 
             int idwErrorCode = 0;
 
-            //if (bIsConnected == true)
-            //{
-            //    axCZKEM1.Disconnect();
-            //    //connected = false;
-            //    bIsConnected = false;
-            //    return -2; //disconnect
-            //}
+            if (bIsConnected == true)
+            {
+                axCZKEM1.Disconnect();
+                //connected = false;
+                bIsConnected = false;
+                return false; //disconnect
+            }
 
-            //if (axCZKEM1.Connect_Net(ip, Convert.ToInt32(port)) == true)
-            //{
-            //    SetConnectState(true);
-            //    return true;
-            //}
-            //else
-            //{
-            //    axCZKEM1.GetLastError(ref idwErrorCode);
-            //    return false;
-            //}
-            return axCZKEM1.Connect_Net(ip, Convert.ToInt32(port));
+            try
+            {
+                if (axCZKEM1.Connect_Net(ip, Convert.ToInt32(port)) == true)
+                {
+                    SetConnectState(true);
+                    return true;
+                }
+                else
+                {
+                    axCZKEM1.GetLastError(ref idwErrorCode);
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Kết nối máy chấm công thất bại");
+            }
         }
 
         public int sta_GetDeviceInfo(out string sFirmver, out string sMac, out string sPlatform, out string sSN, out string sProductTime, out string sDeviceName, out int iFPAlg, out int iFaceAlg, out string sProducter)

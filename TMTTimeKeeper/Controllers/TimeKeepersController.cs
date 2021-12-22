@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using TMTTimeKeeper.Helpers;
 using TMTTimeKeeper.Interface;
@@ -34,8 +35,13 @@ namespace TMTTimeKeeper.Controllers
 
         // POST api/<TimeKeepersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] TimeKeeperSave val)
         {
+            //kiểm tra kết nối
+            var connect = _czkemHelper.Connect(val.IPAddress, val.TCPPort);
+            if (!connect)
+                throw new Exception("Kết nối máy chấm công thất bại");
+            return Ok();
         }
 
         // PUT api/<TimeKeepersController>/5
@@ -55,6 +61,16 @@ namespace TMTTimeKeeper.Controllers
         {
             var res = _czkemHelper.Connect(val.IPAddress,val.TCPPort);
             return Ok(new {Result = res});
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult ReadTimeGLogData([FromBody] ReadTimeGLogDataReq val)
+        {
+            var fromDate = val.DateFrom.ToString("yyyy-MM-dd HH:mm:ss");
+            var toDate = val.DateTo.ToString("yyyy-MM-dd HH:mm:ss");
+            var res = _czkemHelper.Connect(val.IPAddress, val.TCPPort);
+            var result = _czkemHelper.ReadTimeGLogData(val.MachineNumber,fromDate,toDate);
+            return Ok(result);
         }
     }
 }
