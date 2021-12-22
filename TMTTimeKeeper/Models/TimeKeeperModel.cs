@@ -18,4 +18,12 @@ namespace TMTTimeKeeper.Models
         public string IPAddress { get; set; }
         public string TCPPort { get; set; }
     }
+
+    public class ReadTimeGLogDataReq
+    {
+        public DateTime DateFrom { get;set; }
+        public DateTime DateTo { get;set; }
+        public string IPAddress { get; set; }
+        public string TCPPort { get; set; }
+    }
 }

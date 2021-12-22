@@ -68,8 +68,10 @@ namespace TMTTimeKeeper.Controllers
         {
             var fromDate = val.DateFrom.ToString("yyyy-MM-dd HH:mm:ss");
             var toDate = val.DateTo.ToString("yyyy-MM-dd HH:mm:ss");
-            var res = _czkemHelper.Connect(val.IPAddress, val.TCPPort);
-            var result = _czkemHelper.ReadTimeGLogData(val.MachineNumber,fromDate,toDate);
+            var connect = _czkemHelper.Connect(val.IPAddress, val.TCPPort);
+            if (!connect)
+                throw new Exception("Kết nối máy chấm công thất bại");
+            var result = _czkemHelper.ReadTimeGLogData(int.Parse(val.TCPPort),fromDate,toDate);
             return Ok(result);
         }
     }

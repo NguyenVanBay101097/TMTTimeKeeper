@@ -42,14 +42,14 @@ namespace TMTTimeKeeper.Helpers
 
         public ReadLogResult ReadTimeGLogData(int machineNumber, string fromTime, string toTime)
         {
-            if (GetConnectState() == false)
-            {
-                return new ReadLogResult
-                {
-                    StatusCode = -1024,
-                    Message = "*Please connect first!"
-                };
-            }
+            //if (GetConnectState() == false)
+            //{
+            //    return new ReadLogResult
+            //    {
+            //        StatusCode = -1024,
+            //        Message = "*Please connect first!"
+            //    };
+            //}
 
             int ret = 0;
 
@@ -211,7 +211,7 @@ namespace TMTTimeKeeper.Helpers
             {
                 if (axCZKEM1.Connect_Net(ip, Convert.ToInt32(port)) == true)
                 {
-                    SetConnectState(true);
+                    //SetConnectState(true);
                     return true;
                 }
                 else
