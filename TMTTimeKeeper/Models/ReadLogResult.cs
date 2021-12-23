@@ -23,6 +23,7 @@ namespace TMTTimeKeeper.Models
         /// ngày chấm công
         /// </summary>
         public string VerifyDate { get; set; } 
+        public DateTime Date { get; set; }
         /// <summary>
         /// chễ độ xác minh: ngón tay, mật khẩu, id card
         /// </summary>

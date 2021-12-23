@@ -76,6 +76,7 @@ namespace TMTTimeKeeper.Helpers
                     {
                         UserId = sdwEnrollNumber,
                         VerifyDate = idwYear + "-" + idwMonth + "-" + idwDay + " " + idwHour + ":" + idwMinute + ":" + idwSecond,
+                        Date = new DateTime(idwYear, idwMonth, idwDay, idwHour, idwMinute, idwSecond),
                         VerifyType = idwVerifyMode,
                         VerifyState = idwInOutMode,
                         WorkCode = idwWorkcode
