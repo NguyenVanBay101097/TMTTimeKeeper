@@ -16,6 +16,7 @@ import { TimekeeperDataComponent } from './timekeeper-data/timekeeper-data.compo
 import { AppService } from './app.service';
 import { TimeKeeperCreateDialogComponent } from './time-keeper-create-dialog/time-keeper-create-dialog.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthInterceptor } from './auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -46,11 +47,18 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
           { path: 'timekeeper-accounts', component: TimekeeperAccountsComponent },
           { path: 'timekeeper-data', component: TimekeeperDataComponent },
           { path: '', redirectTo: 'timekeeper-list', pathMatch: 'full'},
-        ]
+        ],
       },
     ])
   ],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: AuthInterceptor, 
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [TimeKeeperCreateDialogComponent]
 })

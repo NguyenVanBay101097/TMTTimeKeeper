@@ -1,6 +1,7 @@
 {
   "name": "tmttimekeeper",
   "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +9,9 @@
     "build:ssr": "ng run TMTTimeKeeper:server:dev",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "electron": "electron .",
+    "electron-build": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +45,7 @@
     "@types/jasminewd2": "~2.0.8",
     "@types/node": "~12.11.6",
     "codelyzer": "^5.2.0",
+    "electron": "^16.0.5",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^5.0.2",
