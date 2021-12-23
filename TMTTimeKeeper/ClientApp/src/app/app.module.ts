@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -14,6 +14,8 @@ import { TimekeeperListComponent } from './timekeeper-list/timekeeper-list.compo
 import { TimekeeperAccountsComponent } from './timekeeper-accounts/timekeeper-accounts.component';
 import { TimekeeperDataComponent } from './timekeeper-data/timekeeper-data.component';
 import { AppService } from './app.service';
+import { TimeKeeperCreateDialogComponent } from './time-keeper-create-dialog/time-keeper-create-dialog.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -25,12 +27,15 @@ import { AppService } from './app.service';
     MainComponent,
     TimekeeperListComponent,
     TimekeeperAccountsComponent,
-    TimekeeperDataComponent
+    TimekeeperDataComponent,
+    TimeKeeperCreateDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    NgbModalModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { 
@@ -46,6 +51,7 @@ import { AppService } from './app.service';
     ])
   ],
   providers: [AppService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [TimeKeeperCreateDialogComponent]
 })
 export class AppModule { }

@@ -12,6 +12,6 @@ export class AppService {
   ) { 
   }
   connect(val: any){
-    return this.http.post(this.baseApi + this.apiUrl + '/connect', val);
+    return this.http.post(this.baseApi + this.apiUrl, val);
   }
 }

@@ -3,7 +3,7 @@
         <strong>Danh sách máy chấm công</strong>
     </div>
     <div class="p-0 text-right col-md-4">
-        <button class="btn btn-success">Thêm</button>
+        <button class="btn btn-success" (click)="addTimeKeeper()">Thêm</button>
     </div>
 </div>
 <div class="row">
@@ -26,8 +26,7 @@
             <td>{{item.ipAddress}}</td>
             <td>Chi nhánh 1</td>
             <td>
-                <button *ngIf="!item.isConnect" class="btn btn-primary" (click)="connect(item)">Kết nối</button>
-                <button *ngIf="item.isConnect" class="btn btn-danger">Ngắt kết nối</button>
+                {{isConnect ? 'Đã kết nối' : 'Chưa kết nối'}}
             </td>
           </tr>
         </tbody>

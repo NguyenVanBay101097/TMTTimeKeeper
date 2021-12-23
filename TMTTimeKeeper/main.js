@@ -6,7 +6,7 @@ let mainWindow
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 800,
+        width: 300,
         height: 600,
         autoHideMenuBar: true,
         webPreferences: {

@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
+    localStorage.setItem("abc","345");
     this.router.navigate(['/main']);
   }
 

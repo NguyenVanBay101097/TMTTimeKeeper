@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppService } from '../app.service';
+import { TimeKeeperCreateDialogComponent } from '../time-keeper-create-dialog/time-keeper-create-dialog.component';
 
 @Component({
   selector: 'app-timekeeper-list',
@@ -10,34 +11,42 @@ import { AppService } from '../app.service';
 export class TimekeeperListComponent implements OnInit {
   isConnect = false;
   timeKeepers = [
-    {
-      name: '',
-      model: '',
-      ipAddress: '172.29.7.201',
-      tcpPort: '4370',
-      company: '',
-      state: '',
-      isConnect: false
-    }
+    // {
+    //   name: '',
+    //   model: '',
+    //   ipAddress: '172.29.7.201',
+    //   tcpPort: '4370',
+    //   company: '',
+    //   state: '',
+    //   isConnect: false
+    // }
   ]
+  
   constructor(
     private service: AppService,
-    private router: Router,
-    private route: ActivatedRoute
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
-    
   }
 
   connect(item) {
-    if (item.ipAddress && item.tcpPort) {
-      let val = {ipAddress: item.ipAddress, tcpPort: item.tcpPort};
-      this.service.connect(val).subscribe(result => {
-        item.isConnect = result;
-        
+  }
+
+  addTimeKeeper() {
+    const modalRef = this.modalService.open(TimeKeeperCreateDialogComponent);
+    modalRef.componentInstance.title = 'Thêm mới máy chấm công';
+    modalRef.result.then(result => {
+      this.service.connect(result).subscribe(() => {
+        alert('Đã kết nối máy chấm công');
+        this.timeKeepers.push(result);
+        this.isConnect = true;
+      }, () => {
+        alert('Kết nối thất bại');
+        this.isConnect = false;
       })
-    }
+      
+    })
   }
 
 }

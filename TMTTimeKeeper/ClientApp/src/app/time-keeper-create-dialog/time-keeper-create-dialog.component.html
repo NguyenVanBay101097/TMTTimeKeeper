@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table [formGroup]="form">
+        <tbody>
+            <tr>
+                <td class="th-label">Chi nhánh</td>
+                <td class="w-100"><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td class="th-label">Tên máy</td>
+                <td class="w-100"><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td class="th-label">Model máy</td>
+                <td class="w-100"><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td class="th-label">Seri máy</td>
+                <td class="w-100"><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><h6>Thông tin kết nối máy chấm công qua LAN</h6></td>
+            </tr>
+            <tr>
+                <td class="th-label">Địa chỉ IP</td>
+                <td class="w-100">
+                    <input type="text" class="form-control" formControlName="ipAddress">
+                    <div *ngIf="f.ipAddress.errors && (f.ipAddress.touched || f.ipAddress.dirty || submitted)" class="text-danger">
+                        <div *ngIf="f.ipAddress.errors.required">Nhập địa chỉ IP</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="th-label">Cổng liên kết TCP</td>
+                <td class="w-100">
+                    <input type="text" class="form-control" formControlName="tcpPort">
+                    <div *ngIf="f.tcpPort.errors && (f.tcpPort.touched || f.tcpPort.dirty || submitted)" class="text-danger">
+                        <div *ngIf="f.tcpPort.errors.required">Nhập cổng liên kết TCP</div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success mr-2" (click)="onSave()">Lưu</button>
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Đóng</button>
+  </div>
