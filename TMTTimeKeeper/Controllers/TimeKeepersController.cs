@@ -45,7 +45,11 @@ namespace TMTTimeKeeper.Controllers
             var connect = _czkemHelper.Connect(val.IPAddress, val.TCPPort);
             if (!connect)
                 throw new Exception("Kết nối máy chấm công thất bại");
-            return Ok();
+            else
+            {
+                var res = await _timeKeeperService.Create(val);
+                return Ok(res);
+            }
         }
 
         // PUT api/<TimeKeepersController>/5

@@ -28,13 +28,20 @@ export class TimekeeperListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getTimeKeepers();
   }
 
   connect(item) {
   }
 
+  getTimeKeepers() {
+    this.service.getTimeKeepers().subscribe(result => {
+      console.log(result);
+    })
+  }
+
   addTimeKeeper() {
-    const modalRef = this.modalService.open(TimeKeeperCreateDialogComponent);
+    const modalRef = this.modalService.open(TimeKeeperCreateDialogComponent, {backdrop: 'static', keyboard: false});
     modalRef.componentInstance.title = 'Thêm mới máy chấm công';
     modalRef.result.then(result => {
       this.service.connect(result).subscribe(() => {

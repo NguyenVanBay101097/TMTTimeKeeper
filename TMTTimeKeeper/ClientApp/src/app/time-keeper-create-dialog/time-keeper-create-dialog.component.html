@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h4 class="modal-title">{{title}}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <button type="button" class="close" (click)="activeModal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -13,11 +13,11 @@
             </tr>
             <tr>
                 <td class="th-label">Tên máy</td>
-                <td class="w-100"><input type="text" class="form-control"></td>
+                <td class="w-100"><input type="text" formControlName="name" class="form-control"></td>
             </tr>
             <tr>
                 <td class="th-label">Model máy</td>
-                <td class="w-100"><input type="text" class="form-control"></td>
+                <td class="w-100"><input type="text" formControlName="model" class="form-control"></td>
             </tr>
             <tr>
                 <td class="th-label">Seri máy</td>
@@ -49,5 +49,5 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-success mr-2" (click)="onSave()">Lưu</button>
-    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Đóng</button>
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Đóng</button>
   </div>

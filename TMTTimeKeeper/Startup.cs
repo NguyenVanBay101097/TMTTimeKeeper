@@ -12,6 +12,7 @@ using TMTTimeKeeper.Interface;
 using Microsoft.OpenApi.Models;
 using System;
 using TMTTimeKeeper.Middlewares;
+using ElectronNET.API.Entities;
 using TMTTimeKeeper.Services;
 
 namespace TMTTimeKeeper
@@ -105,6 +106,11 @@ namespace TMTTimeKeeper
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
+            if (HybridSupport.IsElectronActive)
+            {
+                ElectronBootstrap();
+            }
+
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -118,7 +124,28 @@ namespace TMTTimeKeeper
                 }
             });
 
-            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
+            //Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
+        }
+
+        public async void ElectronBootstrap()
+        {
+            var browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            {
+                Width = 1200,
+                Height = 700,
+                Show = false
+            });
+            browserWindow.SetMaximizable(false);
+            await browserWindow.WebContents.Session.ClearCacheAsync();
+
+            // For the gracefull showing of the Electron Window when ready
+            browserWindow.OnReadyToShow += () =>
+            {
+                browserWindow.Show();
+                //browserWindow.Maximize();
+                browserWindow.RemoveMenu();
+            };
+            //Electron.Menu.SetApplicationMenu(new MenuItem[] { });
         }
     }
 }

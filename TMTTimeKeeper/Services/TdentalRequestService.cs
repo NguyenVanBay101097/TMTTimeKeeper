@@ -28,7 +28,7 @@ namespace TMTTimeKeeper.Services
             {
                 BaseAddress = new Uri(_hostWebApiUrl),
             };
-            client.DefaultRequestHeaders.Add("Authorization", $"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDJmMzIxNy0zYzQwLTRhZjMtODc4MC1lZmRkMDgyZDU1MDAiLCJ1bmlxdWVfbmFtZSI6IjEyMzEyMyIsImNvbXBhbnlfaWQiOiI5OGQxN2E4ZS05NDI4LTRiNTktNmNiOS0wOGQ5OTc4NWE5YzAiLCJ1c2VyX3Jvb3QiOiJUcnVlIiwibmJmIjoxNjQwNjc1ODg3LCJleHAiOjE2NDEyODA2ODcsImlhdCI6MTY0MDY3NTg4N30.kmQtBsxBCvD_SrwMoDBSn_U6neoGjn559uchvRXROyw");
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzYTcyOGZjYi04NGY4LTRjYzItODlmNS1mNTU0NTMyNjdiNjAiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiY29tcGFueV9pZCI6IjZjZTA0ZThjLTVmNjctNDVjYy1mZjU4LTA4ZDkyY2MwMjlhZCIsInVzZXJfcm9vdCI6IlRydWUiLCJuYmYiOjE2NDA2ODAyMTAsImV4cCI6MTY0MTI4NTAxMCwiaWF0IjoxNjQwNjgwMjEwfQ.usRojkInvfjqIyUJ9iLHeh2wk14uS8IwroI4BECbVvs");
 
         }
         //public TdentalRequestService(string hostWebApiUrl, string token)

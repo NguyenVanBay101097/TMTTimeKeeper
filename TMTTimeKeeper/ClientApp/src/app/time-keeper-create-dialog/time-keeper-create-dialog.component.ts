@@ -18,6 +18,8 @@ export class TimeKeeperCreateDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
+      name: [null, Validators.required],
+      model: null,
       ipAddress: [null, Validators.required],
       tcpPort: [null, Validators.required]
     })

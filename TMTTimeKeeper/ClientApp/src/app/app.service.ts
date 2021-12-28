@@ -14,4 +14,8 @@ export class AppService {
   connect(val: any){
     return this.http.post(this.baseApi + this.apiUrl, val);
   }
+
+  getTimeKeepers() {
+    return this.http.get(this.baseApi + this.apiUrl);
+  }
 }

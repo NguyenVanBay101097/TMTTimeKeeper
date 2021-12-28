@@ -19,7 +19,10 @@ namespace TMTTimeKeeper.Services
         {
             var val = new TimeKeeperPaged();
             var res = await _tdentalRequestService.GetAsync<PagedResult2<TimeKeeperDisplay>>("api/TimeAttendanceMachines", val);
-            return res.Items;
+            if (res != null)
+                return res.Items;
+            else
+                return null;
         }
 
         public async Task<TimeKeeperDisplay> GetById(Guid id)
@@ -36,6 +39,12 @@ namespace TMTTimeKeeper.Services
         public async Task Delete(Guid id)
         {
             await _tdentalRequestService.DeleteRequest("api/TimeAttendanceMachines/" + id);
+        }
+
+        public async Task<TimeKeeperDisplay> Create(TimeKeeperSave val)
+        {
+            var res = await _tdentalRequestService.PostRequest<TimeKeeperDisplay>("api/TimeAttendanceMachines", val);
+            return res;
         }
     }
 }

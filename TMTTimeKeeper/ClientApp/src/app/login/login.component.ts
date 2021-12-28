@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private authService: AuthService
   ) {
-    if (authService.isAuthenticated()) {
-      this.router.navigate(['/main/timekeeper-list']);
-    }
+    // if (authService.isAuthenticated()) {
+    //   this.router.navigate(['/main/timekeeper-list']);
+    // }
   }
 
   ngOnInit() {
@@ -34,21 +34,21 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.submitted = true;
-    if (this.loginForm.invalid) {
-      return;
-    }
-    let formValue = this.loginForm.value;
-    this.authService.login(formValue).subscribe((result: any) => {
-      if (result.succeeded) {
-        localStorage.setItem('access_token', result.token);
-        localStorage.setItem('refresh_token', result.refreshToken);
-        let url = 'https://' + formValue.storeName.trim() + '.tdental.dev';
-        localStorage.setItem('url', url);
-        this.router.navigate(['/main/timekeeper-list']);
-      }
-    })
-
+    // this.submitted = true;
+    // if (this.loginForm.invalid) {
+    //   return;
+    // }
+    // let formValue = this.loginForm.value;
+    // this.authService.login(formValue).subscribe((result: any) => {
+    //   if (result.succeeded) {
+    //     localStorage.setItem('access_token', result.token);
+    //     localStorage.setItem('refresh_token', result.refreshToken);
+    //     let url = 'https://' + formValue.storeName.trim() + '.tdental.dev';
+    //     localStorage.setItem('url', url);
+    //     this.router.navigate(['/main/timekeeper-list']);
+    //   }
+    // })
+    this.router.navigate(['/main/timekeeper-list']);
   }
 }
 
