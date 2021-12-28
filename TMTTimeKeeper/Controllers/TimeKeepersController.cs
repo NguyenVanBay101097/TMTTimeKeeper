@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMTTimeKeeper.Helpers;
 using TMTTimeKeeper.Interface;
 using TMTTimeKeeper.Models;
@@ -14,15 +15,17 @@ namespace TMTTimeKeeper.Controllers
     public class TimeKeepersController : ControllerBase
     {
         private readonly ICzkemHelper _czkemHelper = new CzkemHelper();
-        public TimeKeepersController(ICzkemHelper czkemHelper)
+        private readonly ITimeKeeperService _timeKeeperService;
+        public TimeKeepersController(ICzkemHelper czkemHelper, ITimeKeeperService timeKeeperService)
         {
             _czkemHelper = czkemHelper;
+            _timeKeeperService = timeKeeperService;
         }
         // GET: api/<TimeKeepersController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-           var res = new string[] { "value1", "value2" };
+            var res = await _timeKeeperService.GetAll();
             return Ok(res);
         }
 
@@ -35,7 +38,7 @@ namespace TMTTimeKeeper.Controllers
 
         // POST api/<TimeKeepersController>
         [HttpPost]
-        public IActionResult Post([FromBody] TimeKeeperSave val)
+        public async Task<IActionResult> Post([FromBody] TimeKeeperSave val)
         {
             //kiểm tra kết nối
             var connect = _czkemHelper.Connect(val.IPAddress, val.TCPPort);
@@ -73,6 +76,13 @@ namespace TMTTimeKeeper.Controllers
                 throw new Exception("Kết nối máy chấm công thất bại");
             var result = _czkemHelper.ReadTimeGLogData(int.Parse(val.TCPPort),fromDate,toDate);
             return Ok(result);
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult SyncData([FromBody] ReadTimeGLogDataReq val)
+        {
+           
+            return Ok();
         }
     }
 }

@@ -12,6 +12,7 @@ using TMTTimeKeeper.Interface;
 using Microsoft.OpenApi.Models;
 using System;
 using TMTTimeKeeper.Middlewares;
+using TMTTimeKeeper.Services;
 
 namespace TMTTimeKeeper
 {
@@ -55,7 +56,9 @@ namespace TMTTimeKeeper
             });
 
             services.AddScoped<ICzkemHelper, CzkemHelper>();
-            
+            services.AddScoped<ITimeKeeperService, TimeKeeperService>();
+            services.AddScoped<ITendalRequestService, TdentalRequestService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

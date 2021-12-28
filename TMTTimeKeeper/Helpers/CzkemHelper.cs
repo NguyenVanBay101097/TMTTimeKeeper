@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Text;
 using TMTTimeKeeper.Interface;
 using TMTTimeKeeper.Models;
@@ -67,6 +68,20 @@ namespace TMTTimeKeeper.Helpers
             int idwWorkcode = 0;
 
             var logData = new List<ReadLogResultData>();
+            void abc() 
+            {
+                Debug.Write("abnc");
+            };
+            //common interface
+            void axCZKEM1_OnAttTransactionEx(string sEnrollNumber, int iIsInValid, int iAttState, int iVerifyMethod, int iYear, int iMonth, int iDay, int iHour, int iMinute, int iSecond, int iWorkCode)
+            {
+                // if (OnAttTransactionEx != null) OnAttTransactionEx(sEnrollNumber, iIsInValid, iAttState, iVerifyMethod, iYear, iMonth, iDay, iHour, iMinute, iSecond, iWorkCode, axCZKEM1.MachineNumber, Tag);
+                Debug.Write("df");
+            }
+            this.axCZKEM1.OnAttTransactionEx += new zkemkeeper._IZKEMEvents_OnAttTransactionExEventHandler(axCZKEM1_OnAttTransactionEx);
+
+
+
             if (axCZKEM1.ReadTimeGLogData(machineNumber, fromTime, toTime))
             {
                 while (axCZKEM1.SSR_GetGeneralLogData(machineNumber, out sdwEnrollNumber, out idwVerifyMode,
