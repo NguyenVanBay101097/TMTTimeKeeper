@@ -50,6 +50,7 @@ namespace TMTTimeKeeper.Models
         public DateTime DateTo { get;set; }
         public string IPAddress { get; set; }
         public string TCPPort { get; set; }
+        public Guid DeviceId { get; set; }
     }
 
     public class TimeKeeperSyncDataReq
