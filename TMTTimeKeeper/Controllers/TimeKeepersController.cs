@@ -31,9 +31,10 @@ namespace TMTTimeKeeper.Controllers
 
         // GET api/<TimeKeepersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return "value";
+            var res = await _timeKeeperService.GetById(id);
+            return Ok(res);
         }
 
         // POST api/<TimeKeepersController>
@@ -49,14 +50,16 @@ namespace TMTTimeKeeper.Controllers
 
         // PUT api/<TimeKeepersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task Put(Guid id, [FromBody] TimeKeeperSave val)
         {
+            await _timeKeeperService.Update(id, val);
         }
 
         // DELETE api/<TimeKeepersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(Guid id)
         {
+            await _timeKeeperService.Delete(id);
         }
         
         [HttpPost("[action]")]

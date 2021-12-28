@@ -8,7 +8,7 @@ namespace TMTTimeKeeper.Interface
         Task<TResult> GetAsync<TResult>(string url, object obj = null);
         Task<string> GetStringAsync(string url);
         Task<TResult> PostRequest<TResult>(string apiUrl, object postObject);
-        Task PutRequest<T>(string apiUrl, T putObject);
+        Task PutRequest<T>(string apiUrl, object putObject);
         Task DeleteRequest(string apiUrl);
     }
 }

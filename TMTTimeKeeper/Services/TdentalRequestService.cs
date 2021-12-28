@@ -142,7 +142,7 @@ namespace TMTTimeKeeper.Services
             return result;
         }
 
-        public async Task PutRequest<T>(string apiUrl, T putObject)
+        public async Task PutRequest<T>(string apiUrl, object putObject)
         {
                 var response = await client.PutAsync(apiUrl, putObject, new JsonMediaTypeFormatter()).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
@@ -162,6 +162,11 @@ namespace TMTTimeKeeper.Services
         {
             using (HttpContent content = new FormUrlEncodedContent(urlParams))
                 return await content.ReadAsStringAsync();
+        }
+
+        public Task PutRequest<T>(string apiUrl, T putObject)
+        {
+            throw new NotImplementedException();
         }
     }
 
