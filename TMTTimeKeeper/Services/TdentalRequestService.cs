@@ -14,6 +14,7 @@ using System.Web;
 using System.Xml.Serialization;
 using TMTTimeKeeper.Interface;
 using TMTTimeKeeper.Models;
+using TMTTimeKeeper.Models.ApiRequestModels;
 
 namespace TMTTimeKeeper.Services
 {
@@ -185,6 +186,11 @@ namespace TMTTimeKeeper.Services
         public Task PutRequest<T>(string apiUrl, T putObject)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<TimeAttendanceSyncLogDisplay>> GetAttendanceSyncLog(GetAttendanceSyncReq val)
+        {
+            return await PostRequest<IEnumerable<TimeAttendanceSyncLogDisplay>>("api/TimeAttendanceMachines/GetAttendanceSyncLog", val);
         }
     }
 

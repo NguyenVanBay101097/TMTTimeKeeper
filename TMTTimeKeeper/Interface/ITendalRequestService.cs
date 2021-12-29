@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMTTimeKeeper.Models.ApiRequestModels;
 
 namespace TMTTimeKeeper.Interface
 {
@@ -10,5 +12,6 @@ namespace TMTTimeKeeper.Interface
         Task<TResult> PostRequest<TResult>(string apiUrl, object postObject);
         Task PutRequest<T>(string apiUrl, object putObject);
         Task DeleteRequest(string apiUrl);
+        Task<IEnumerable<TimeAttendanceSyncLogDisplay>> GetAttendanceSyncLog(GetAttendanceSyncReq val);
     }
 }

@@ -7,7 +7,7 @@ namespace TMTTimeKeeper.Services
         private IServiceProvider _provider;
         public BaseService(IServiceProvider provider)
         {
-
+            _provider = provider;
         }
 
         protected T GetService<T>()
