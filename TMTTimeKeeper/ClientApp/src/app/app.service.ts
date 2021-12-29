@@ -18,4 +18,16 @@ export class AppService {
   getTimeKeepers() {
     return this.http.get(this.baseApi + this.apiUrl);
   }
+
+  getTimeKeeperById(id) {
+    return this.http.get(this.baseApi + this.apiUrl + '/' + id);
+  }
+
+  update(id, val: any) {
+    return this.http.put(this.baseApi + this.apiUrl + '/' + id, val);
+  }
+
+  delete(id) {
+    return this.http.delete(this.baseApi + this.apiUrl + '/' + id);
+  }
 }

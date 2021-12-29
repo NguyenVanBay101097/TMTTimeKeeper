@@ -19,9 +19,9 @@
                 <td class="th-label">Model máy</td>
                 <td class="w-100"><input type="text" formControlName="model" class="form-control"></td>
             </tr>
-            <tr>
+            <tr *ngIf="id">
                 <td class="th-label">Seri máy</td>
-                <td class="w-100"><input type="text" class="form-control"></td>
+                <td class="w-100"><input type="text" formControlName="seriNumber" class="form-control"></td>
             </tr>
             <tr>
                 <td colspan="2"><h6>Thông tin kết nối máy chấm công qua LAN</h6></td>

@@ -47,6 +47,7 @@ namespace TMTTimeKeeper.Controllers
                 throw new Exception("Kết nối máy chấm công thất bại");
             else
             {
+                val.SeriNumber = _czkemHelper.GetSeriNumber(int.Parse(val.TCPPort));
                 var res = await _timeKeeperService.Create(val);
                 return Ok(res);
             }
@@ -56,7 +57,14 @@ namespace TMTTimeKeeper.Controllers
         [HttpPut("{id}")]
         public async Task Put(Guid id, [FromBody] TimeKeeperSave val)
         {
-            await _timeKeeperService.Update(id, val);
+             var connect = _czkemHelper.Connect(val.IPAddress, val.TCPPort);
+            if (!connect)
+                throw new Exception("Kết nối máy chấm công thất bại");
+            else
+            {
+                val.SeriNumber = _czkemHelper.GetSeriNumber(int.Parse(val.TCPPort));
+                await _timeKeeperService.Update(id, val);
+            }
         }
 
         // DELETE api/<TimeKeepersController>/5

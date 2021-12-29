@@ -242,6 +242,12 @@ namespace TMTTimeKeeper.Helpers
                 throw new Exception("Kết nối máy chấm công thất bại");
             }
         }
+        public string GetSeriNumber(int machineNumber)
+        {
+            string seri = "";
+            axCZKEM1.GetSerialNumber(machineNumber, out seri);
+            return seri;
+        }
 
         public int sta_GetDeviceInfo(out string sFirmver, out string sMac, out string sPlatform, out string sSN, out string sProductTime, out string sDeviceName, out int iFPAlg, out int iFaceAlg, out string sProducter)
         {

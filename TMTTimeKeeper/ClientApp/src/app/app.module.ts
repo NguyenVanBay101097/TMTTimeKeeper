@@ -17,6 +17,7 @@ import { AppService } from './app.service';
 import { TimeKeeperCreateDialogComponent } from './time-keeper-create-dialog/time-keeper-create-dialog.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthInterceptor } from './auth-interceptor';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AuthInterceptor } from './auth-interceptor';
     TimekeeperListComponent,
     TimekeeperAccountsComponent,
     TimekeeperDataComponent,
-    TimeKeeperCreateDialogComponent
+    TimeKeeperCreateDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -60,6 +62,6 @@ import { AuthInterceptor } from './auth-interceptor';
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [TimeKeeperCreateDialogComponent]
+  entryComponents: [TimeKeeperCreateDialogComponent, ConfirmDialogComponent]
 })
 export class AppModule { }
