@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-time-keeper-create-dialog',
@@ -11,9 +12,11 @@ export class TimeKeeperCreateDialogComponent implements OnInit {
   title: string;
   form: FormGroup;
   submitted = false;
+  id: string;
   constructor(
     public activeModal: NgbActiveModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private service: AppService
   ) { }
 
   ngOnInit() {
@@ -21,8 +24,13 @@ export class TimeKeeperCreateDialogComponent implements OnInit {
       name: [null, Validators.required],
       model: null,
       ipAddress: [null, Validators.required],
-      tcpPort: [null, Validators.required]
+      tcpPort: [null, Validators.required],
+      seriNumber: null
     })
+
+    if (this.id) {
+      this.getValueFormById(this.id);
+    }
   }
 
   onSave() {
@@ -37,6 +45,12 @@ export class TimeKeeperCreateDialogComponent implements OnInit {
 
   get f() {
     return this.form.controls;
+  }
+
+  getValueFormById(id) {
+    this.service.getTimeKeeperById(id).subscribe(result => {
+      this.form.patchValue(result);
+    })
   }
 
 }

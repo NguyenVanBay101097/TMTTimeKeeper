@@ -16,6 +16,7 @@
             <th scope="col">Địa chỉ IP</th>
             <th scope="col">Chi nhánh</th>
             <th scope="col">Trạng thái</th>
+            <th scope="col">Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +28,14 @@
             <td>Chi nhánh 1</td>
             <td>
                 {{isConnect ? 'Đã kết nối' : 'Chưa kết nối'}}
+            </td>
+            <td>
+              <button class="btn btn-success mr-2" title="Sửa" (click)="update(item.id)">
+                <i class="far fa-edit"></i>
+              </button>
+              <button class="btn btn-danger" title="Xóa" (click)="delete(item.id)">
+                <i class="far fa-trash-alt"></i>
+              </button>
             </td>
           </tr>
         </tbody>
