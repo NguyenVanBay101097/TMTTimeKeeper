@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -9,26 +11,42 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml.Serialization;
 using TMTTimeKeeper.Interface;
+using TMTTimeKeeper.Models;
 
 namespace TMTTimeKeeper.Services
 {
-    public class TdentalRequestService : ITendalRequestService
+    public class TdentalRequestService : BaseService, ITendalRequestService
     {
         private readonly string _hostWebApiUrl = "";
         private readonly string _token;
         private HttpClient client;
         private IConfiguration _config; 
-        public TdentalRequestService(IConfiguration config)
+        private IXmlService _xmlService;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+
+        public TdentalRequestService(IServiceProvider provider,IConfiguration config, IXmlService xmlService, IWebHostEnvironment webHostEnvironment)
+        : base(provider)
         {
             _config = config;
-            this._hostWebApiUrl = "https://localhost:44377/";
+            _xmlService = xmlService;
+            _hostingEnvironment = webHostEnvironment;
+
+            SetRequest();
+        }
+
+
+        private void SetRequest()
+        {
+            var path = Path.Combine(_hostingEnvironment.ContentRootPath, @"ThirdParty\Tdental.xml");
+            var data = _xmlService.GetObject<TdentalRequestInfo>(path);
 
             client = new HttpClient
             {
-                BaseAddress = new Uri(_hostWebApiUrl),
+                BaseAddress = new Uri(data.Domain),
             };
-            client.DefaultRequestHeaders.Add("Authorization", $"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzYTcyOGZjYi04NGY4LTRjYzItODlmNS1mNTU0NTMyNjdiNjAiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiY29tcGFueV9pZCI6IjZjZTA0ZThjLTVmNjctNDVjYy1mZjU4LTA4ZDkyY2MwMjlhZCIsInVzZXJfcm9vdCI6IlRydWUiLCJuYmYiOjE2NDA2ODAyMTAsImV4cCI6MTY0MTI4NTAxMCwiaWF0IjoxNjQwNjgwMjEwfQ.usRojkInvfjqIyUJ9iLHeh2wk14uS8IwroI4BECbVvs");
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {data.Token}");
 
         }
         //public TdentalRequestService(string hostWebApiUrl, string token)
@@ -179,5 +197,19 @@ namespace TMTTimeKeeper.Services
             var result = deserialized.Where(x=> x.Value != null).Select((kvp) => kvp.Key.ToString() + "=" + Uri.EscapeDataString(kvp.Value)).Aggregate((p1, p2) => p1 + "&" + p2);
             return result;
         }
+    }
+
+
+    [XmlRoot(ElementName = "Data")]
+    public class TdentalRequestInfo
+    {
+        [XmlElement]
+        public string Token { get; set; }
+        [XmlElement]
+        public string Domain { get; set; }
+        [XmlElement]
+        public string UserName { get; set; }
+        [XmlElement]
+        public string PassWord { get; set; }
     }
 }

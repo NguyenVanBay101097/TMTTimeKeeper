@@ -8,10 +8,10 @@ using TMTTimeKeeper.Models;
 
 namespace TMTTimeKeeper.Services
 {
-    public class TimeKeeperService : ITimeKeeperService
+    public class TimeKeeperService :BaseService, ITimeKeeperService
     {
         private readonly ITendalRequestService _tdentalRequestService;
-        public TimeKeeperService(ITendalRequestService tendalRequestService)
+        public TimeKeeperService(IServiceProvider provider, ITendalRequestService tendalRequestService):base(provider)
         {
             _tdentalRequestService = tendalRequestService;
         }
@@ -45,6 +45,22 @@ namespace TMTTimeKeeper.Services
         {
             var res = await _tdentalRequestService.PostRequest<TimeKeeperDisplay>("api/TimeAttendanceMachines", val);
             return res;
+        }
+
+        public async Task SyncData(ReadTimeGLogDataReq val)
+        {
+            var czkHelper = GetService<ICzkemHelper>();
+
+            //kiểm tra kết nối
+            var device = await GetById(val.DeviceId);
+            czkHelper.Connect(device.IPAddress,device.TCPPort);
+            //lấy all chấm công
+            var attendances = czkHelper.ReadTimeGLogData(int.Parse(device.TCPPort), val.DateFrom.ToString("yyyy-MM-dd HH:mm:ss"), val.DateTo.ToString("yyyy-MM-dd HH:mm:ss")).Data;
+            //lấy list chấm công thành công
+            //loại bỏ list chấm công đã từng đồng bộ thành công
+            //gọi api đồng bộ
+            await _tdentalRequestService.PostRequest<object>("api/TimeAttendanceMachines/SyncData", val);
+
         }
     }
 }

@@ -14,7 +14,7 @@ namespace TMTTimeKeeper.Controllers
     [ApiController]
     public class TimeKeepersController : ControllerBase
     {
-        private readonly ICzkemHelper _czkemHelper = new CzkemHelper();
+        private readonly ICzkemHelper _czkemHelper;
         private readonly ITimeKeeperService _timeKeeperService;
         public TimeKeepersController(ICzkemHelper czkemHelper, ITimeKeeperService timeKeeperService)
         {

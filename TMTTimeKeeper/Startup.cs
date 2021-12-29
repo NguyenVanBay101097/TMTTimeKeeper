@@ -59,6 +59,7 @@ namespace TMTTimeKeeper
             services.AddScoped<ICzkemHelper, CzkemHelper>();
             services.AddScoped<ITimeKeeperService, TimeKeeperService>();
             services.AddScoped<ITendalRequestService, TdentalRequestService>();
+            services.AddScoped<IXmlService, XmlService>();
 
         }
 

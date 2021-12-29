@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Data>
+	<Token>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDJmMzIxNy0zYzQwLTRhZjMtODc4MC1lZmRkMDgyZDU1MDAiLCJ1bmlxdWVfbmFtZSI6IjEyMzEyMyIsImNvbXBhbnlfaWQiOiI5OGQxN2E4ZS05NDI4LTRiNTktNmNiOS0wOGQ5OTc4NWE5YzAiLCJ1c2VyX3Jvb3QiOiJUcnVlIiwibmJmIjoxNjQwNjc2NDMwLCJleHAiOjE2NDEyODEyMzAsImlhdCI6MTY0MDY3NjQzMH0.qrtf1BovjtE2QXj-dqAwI36dZzW8oyndXlv46YiVaAk</Token>
+	<RefreshToken>
+	HidEbwCOiAWaU8GiAyiGb31LKTaNqk1ZBHPVF8sqNDQ=
+	</RefreshToken>
+	<Domain>https://localhost:44377/</Domain>
+	<UserName>
+		123123
+	</UserName>
+	<PassWord>
+		123123
+	</PassWord>
+</Data>

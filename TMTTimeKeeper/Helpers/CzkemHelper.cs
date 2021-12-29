@@ -210,7 +210,7 @@ namespace TMTTimeKeeper.Helpers
         {
             if (Convert.ToInt32(port) <= 0 || Convert.ToInt32(port) > 65535)
             {
-                return false;
+                throw new LogicExeption("sai cổng kêt nối");
             }
 
             int idwErrorCode = 0;
@@ -233,10 +233,10 @@ namespace TMTTimeKeeper.Helpers
                 else
                 {
                     axCZKEM1.GetLastError(ref idwErrorCode);
-                    return false;
+                    throw new LogicExeption(" mã lỗi: " + idwErrorCode);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw new Exception("Kết nối máy chấm công thất bại");
