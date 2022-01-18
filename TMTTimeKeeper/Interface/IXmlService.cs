@@ -11,5 +11,6 @@ namespace TMTTimeKeeper.Interface
         T FromXML<T>(string xml);
         void WriteXMLFile<T>(string path, T obj, string rootEl = "Data");
         T GetObject<T>(string path);
+        void ChangeTextInNode(string path,string nodeName, string value);
     }
 }

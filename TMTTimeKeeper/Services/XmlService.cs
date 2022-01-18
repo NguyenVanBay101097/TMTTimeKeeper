@@ -47,6 +47,13 @@ namespace TMTTimeKeeper.Services
                 return (T)xmlSerializer.Deserialize(stream);
             }
         }
+
+        public void ChangeTextInNode(string path,string nodeName, string value)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path); 
+            doc.SelectSingleNode(nodeName).InnerText = value;
+        }
     }
 
 

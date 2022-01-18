@@ -1,14 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Data>
-	<Token>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDJmMzIxNy0zYzQwLTRhZjMtODc4MC1lZmRkMDgyZDU1MDAiLCJ1bmlxdWVfbmFtZSI6IjEyMzEyMyIsImNvbXBhbnlfaWQiOiI5OGQxN2E4ZS05NDI4LTRiNTktNmNiOS0wOGQ5OTc4NWE5YzAiLCJ1c2VyX3Jvb3QiOiJUcnVlIiwibmJmIjoxNjQwNjc2NDMwLCJleHAiOjE2NDEyODEyMzAsImlhdCI6MTY0MDY3NjQzMH0.qrtf1BovjtE2QXj-dqAwI36dZzW8oyndXlv46YiVaAk</Token>
-	<RefreshToken>
-	HidEbwCOiAWaU8GiAyiGb31LKTaNqk1ZBHPVF8sqNDQ=
-	</RefreshToken>
-	<Domain>https://localhost:44377/</Domain>
-	<UserName>
-		123123
-	</UserName>
-	<PassWord>
-		123123
-	</PassWord>
+<?xml version="1.0" encoding="utf-8"?>
+<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Token>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzYTcyOGZjYi04NGY4LTRjYzItODlmNS1mNTU0NTMyNjdiNjAiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiY29tcGFueV9pZCI6IjZjZTA0ZThjLTVmNjctNDVjYy1mZjU4LTA4ZDkyY2MwMjlhZCIsInVzZXJfcm9vdCI6IlRydWUiLCJuYmYiOjE2NDA3NzM4NzksImV4cCI6MTY0MDc3MzkzOSwiaWF0IjoxNjQwNzczODc5fQ.YycvliUMeBcWc8Bx4_rNH9PL7LrIrji952UAcePAe2k</Token>
+  <RefreshToken>vRp9/AK0eUh1lOLNo4q5zGs9hoAYUkJDi4qE5yaPL3U=</RefreshToken>
+  <Domain>https://localhost:44377</Domain>
+  <UserName>admin</UserName>
+  <PassWord>123123</PassWord>
 </Data>

@@ -60,6 +60,9 @@ namespace TMTTimeKeeper
             services.AddScoped<ITimeKeeperService, TimeKeeperService>();
             services.AddScoped<ITendalRequestService, TdentalRequestService>();
             services.AddScoped<IXmlService, XmlService>();
+            services.AddScoped<IAccountService, AccountService>();
+
+
 
         }
 

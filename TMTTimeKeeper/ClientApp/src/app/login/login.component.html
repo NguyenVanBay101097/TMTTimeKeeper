@@ -8,6 +8,7 @@
                         <div class="form-group">
                             <label for="storename" class="text-info">Tên cửa hàng:</label><br>
                             <input type="text" name="storename" id="storename" class="form-control" formControlName="storeName">
+                            <label>{{this.getDomain()}}</label><br>
                         </div>
                         <div class="form-group">
                             <label for="username" class="text-info">Tên đăng nhập:</label><br>
@@ -18,7 +19,7 @@
                             <input type="password" name="password" id="password" class="form-control" formControlName="password">
                         </div>
                         <div class="form-group">
-                            <label for="remember-me" class="text-info"><span>Duy trì đăng nhập</span> <span><input id="remember-me" name="remember-me" type="checkbox" formControlName="rememberMe"></span></label><br>
+                            <label for="remember-me" class="text-info"><span>Duy trì đăng nhập</span><span><input id="remember-me" name="remember-me" type="checkbox" formControlName="rememberMe"></span></label><br>
                             <button (click)="onLogin()" type="button" class="btn btn-info btn-md">Đăng nhập</button>
                         </div>
                     </form>

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -33,11 +34,10 @@ namespace TMTTimeKeeper.Services
             _xmlService = xmlService;
             _hostingEnvironment = webHostEnvironment;
 
-            SetRequest();
         }
 
 
-        private void SetRequest()
+        private async Task SetRequest()
         {
             var path = Path.Combine(_hostingEnvironment.ContentRootPath, @"ThirdParty\Tdental.xml");
             var data = _xmlService.GetObject<TdentalRequestInfo>(path);
@@ -46,8 +46,31 @@ namespace TMTTimeKeeper.Services
             {
                 BaseAddress = new Uri(data.Domain),
             };
-            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {data.Token}");
+            //check token hết hạn chưa? rồi thì lấy token mới => lưu vào xml. (tìm cách tìm cái node token và lưu token)
+            if (isInvalidToken(data.Token))
+            {
+                var val = new RefreshViewModel()
+                {
+                    AccessToken = data.Token,
+                    RefreshToken = data.RefreshToken
+                };
+                var result = await PostRequest<RefreshResponseViewModel>(data.Domain + "/api/Account/Refresh", val, true);
+                if (result != null)
+                {
+                    data.Token = result.AccessToken;
+                    data.RefreshToken = result.RefreshToken;
+                    _xmlService.ChangeTextInNode(path, "Token", result.AccessToken);
+                    _xmlService.ChangeTextInNode(path, "RefreshToken", result.AccessToken);
+                }
+            }
 
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {data.Token}");
+        }
+
+        private bool isInvalidToken(string token)
+        {
+            var jwtToken = new JwtSecurityToken(token);
+            return (jwtToken == null) || (jwtToken.ValidFrom > DateTime.UtcNow) || (jwtToken.ValidTo < DateTime.UtcNow);
         }
         //public TdentalRequestService(string hostWebApiUrl, string token)
         //{
@@ -72,6 +95,8 @@ namespace TMTTimeKeeper.Services
 
         public async Task<TResult> GetAsync<TResult>(string url)
         {
+            await SetRequest();
+
             client.Timeout = TimeSpan.FromSeconds(30);
             var result = default(TResult);
             try
@@ -103,6 +128,8 @@ namespace TMTTimeKeeper.Services
 
         public async Task<TResult> GetAsync<TResult>(string url, object obj = null)
         {
+            await SetRequest();
+
             if (obj != null)
                 url += "?" +obj.ToQueryString();
             client.Timeout = TimeSpan.FromSeconds(30);
@@ -134,14 +161,19 @@ namespace TMTTimeKeeper.Services
 
         public async Task<string> GetStringAsync(string url)
         {
+            await SetRequest();
+
             var httpRequest = new HttpRequestMessage(new HttpMethod("GET"), url);
             var response = client.SendAsync(httpRequest).Result;
             var jsonString = await response.Content.ReadAsStringAsync();
             return jsonString;
         }
 
-        public async Task<TResult> PostRequest<TResult>(string apiUrl, object postObject)
+        public async Task<TResult> PostRequest<TResult>(string apiUrl, object postObject, bool isAnonymous = false)
         {
+            if(!isAnonymous)
+                await SetRequest();
+
             TResult result = default(TResult);
 
                 var response = await client.PostAsync(apiUrl, postObject, new JsonMediaTypeFormatter()).ConfigureAwait(false);
@@ -160,14 +192,38 @@ namespace TMTTimeKeeper.Services
             return result;
         }
 
+        public async Task<TResult> Login<TResult>(string apiUrl, object postObject)
+        {
+            TResult result = default(TResult);
+
+            var response = await client.PostAsync(apiUrl, postObject, new JsonMediaTypeFormatter()).ConfigureAwait(false);
+
+            response.EnsureSuccessStatusCode();
+
+            await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+            {
+                if (x.IsFaulted)
+                    throw x.Exception;
+
+                result = JsonConvert.DeserializeObject<TResult>(x.Result);
+
+            });
+
+            return result;
+        }
+
         public async Task PutRequest<T>(string apiUrl, object putObject)
         {
-                var response = await client.PutAsync(apiUrl, putObject, new JsonMediaTypeFormatter()).ConfigureAwait(false);
+            SetRequest();
+
+            var response = await client.PutAsync(apiUrl, putObject, new JsonMediaTypeFormatter()).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteRequest(string apiUrl)
         {
+            SetRequest();
+
             var response = await client.DeleteAsync(apiUrl).ConfigureAwait(false);
             if (!response.IsSuccessStatusCode)
             {
@@ -182,10 +238,6 @@ namespace TMTTimeKeeper.Services
                 return await content.ReadAsStringAsync();
         }
 
-        public Task PutRequest<T>(string apiUrl, T putObject)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public static class ObjectExtensions
@@ -205,6 +257,8 @@ namespace TMTTimeKeeper.Services
     {
         [XmlElement]
         public string Token { get; set; }
+        [XmlElement]
+        public string RefreshToken { get; set; }
         [XmlElement]
         public string Domain { get; set; }
         [XmlElement]

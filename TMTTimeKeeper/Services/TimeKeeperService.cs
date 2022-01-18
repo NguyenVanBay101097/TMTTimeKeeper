@@ -43,7 +43,7 @@ namespace TMTTimeKeeper.Services
 
         public async Task<TimeKeeperDisplay> Create(TimeKeeperSave val)
         {
-            var res = await _tdentalRequestService.PostRequest<TimeKeeperDisplay>("api/TimeAttendanceMachines", val);
+            var res = await _tdentalRequestService.PostRequest<TimeKeeperDisplay>("api/TimeAttendanceMachines", val, false);
             return res;
         }
 
@@ -59,7 +59,7 @@ namespace TMTTimeKeeper.Services
             //lấy list chấm công thành công
             //loại bỏ list chấm công đã từng đồng bộ thành công
             //gọi api đồng bộ
-            await _tdentalRequestService.PostRequest<object>("api/TimeAttendanceMachines/SyncData", val);
+            await _tdentalRequestService.PostRequest<object>("api/TimeAttendanceMachines/SyncData", val, false);
 
         }
     }

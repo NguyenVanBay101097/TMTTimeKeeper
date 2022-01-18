@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
@@ -8,9 +8,12 @@ import { mergeMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(private http: HttpClient) { }
-
+  apiUrl = 'api/Accounts';
+  constructor(
+    private http: HttpClient,
+    @Inject('BASE_API') private baseApi: string
+  ) { 
+  }
   isAuthenticated() {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -27,29 +30,7 @@ export class AuthService {
 }
 
   login(val) {
-    let storeName = val.storeName.trim();
-    let url = 'https://' + storeName + '.tdental.dev/api/account/login';
-    return this.http.post(url,val);
-    // let storeName = val.storeName.trim();
-    // let url = 'https://' + storeName + '.tdental.dev/api/account/login';
-    // this.http.post(url,val).subscribe((result: any) => {
-    //   localStorage.setItem('access_token', result.token);
-    //   localStorage.setItem('refresh_token', result.refreshToken);
-    //   localStorage.setItem('url', url);
-    // });
-
-    // return this.performLogin(val).pipe(
-    //   mergeMap((result: any) => {
-    //     if (result.succeeded) {
-    //           localStorage.setItem('access_token', result.token);
-    //           localStorage.setItem('refresh_token', result.refreshToken);
-    //           let url = 'https://' + val.storeName.trim() + '.tdental.dev/api/account/login';
-    //           localStorage.setItem('url', url);
-    //     } else {
-    //         return of(result);
-    //     }
-    // })
-    // )
+    return this.http.post(this.baseApi + this.apiUrl + '/login', val);
   }
 
   logout() {
