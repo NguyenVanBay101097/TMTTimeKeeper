@@ -84,9 +84,9 @@ namespace TMTTimeKeeper.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult SyncData([FromBody] ReadTimeGLogDataReq val)
+        public async Task<IActionResult> SyncData([FromBody] ReadTimeGLogDataReq val)
         {
-           
+             await _timeKeeperService.SyncData(val);  
             return Ok();
         }
     }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TMTTimeKeeper.Interface;
 using TMTTimeKeeper.Models;
+using TMTTimeKeeper.Models.ApiRequestModels;
 
 namespace TMTTimeKeeper.Services
 {
@@ -57,8 +59,18 @@ namespace TMTTimeKeeper.Services
             //lấy all chấm công
             var attendances = czkHelper.ReadTimeGLogData(int.Parse(device.TCPPort), val.DateFrom.ToString("yyyy-MM-dd HH:mm:ss"), val.DateTo.ToString("yyyy-MM-dd HH:mm:ss")).Data;
             //lấy list chấm công thành công
+            var logReq = new GetAttendanceSyncReq()
+            {
+                DateFrom = val.DateFrom,
+                DateTo = val.DateTo,
+                MachineId = val.DeviceId,
+                State = "success"
+            };
+            var successLog = await _tdentalRequestService.GetAttendanceSyncLog(logReq);
             //loại bỏ list chấm công đã từng đồng bộ thành công
+            attendances = attendances.Where(x=> !successLog.Any(z=> z.AttendanceTime == x.Date)).ToList();
             //gọi api đồng bộ
+            await _tdentalRequestService.PostRequest<object>("api/TimeAttendanceMachines/SyncData", new AttenDanceSyncDataReq() { MachineId = device.Id, Data = attendances});
             await _tdentalRequestService.PostRequest<object>("api/TimeAttendanceMachines/SyncData", val, false);
 
         }

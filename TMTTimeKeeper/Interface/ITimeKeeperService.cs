@@ -13,6 +13,7 @@ namespace TMTTimeKeeper.Interface
         Task<TimeKeeperDisplay> Create(TimeKeeperSave val);
         Task Update(Guid id, TimeKeeperSave val);
         Task Delete(Guid id);
+        Task SyncData(ReadTimeGLogDataReq val);
 
     }
 }
